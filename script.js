@@ -92,11 +92,25 @@ function GameController(
     return false;
   };
 
+  const isGameOver = () => {
+    for (let i = 0; i < board.rows; i++) {
+      for (let j = 0; j < board.columns; j++) {
+        if (board.board[i][j] === 0) return false;
+      }
+    }
+
+    return true;
+  };
+
   const playRound = (row, column) => {
     if (board.isMoveValid(row, column)) {
       board.makeMove(row, column, getActivePlayer().mark);
 
       console.log(didPlayerWin());
+      // Create option to restart
+
+      console.log(isGameOver());
+      // Create option to restart
 
       switchPlayerTurn();
       printNewRound();
