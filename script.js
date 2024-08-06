@@ -12,16 +12,17 @@ function Gameboard() {
 
   const getBoard = () => board;
 
-  const makeMove = (row, column, player) => {
-    //Check if move is valid
-    if (board[row][column] !== 0) return;
+  const isMoveValid = (row, column) => {
+    return board[row][column] === 0;
+  };
 
-    board[row][column] = player;
+  const makeMove = (row, column, player) => {
+    if (isMoveValid(row, column)) board[row][column] = player;
   };
 
   const printBoard = () => console.table(board);
 
-  return { getBoard, makeMove, printBoard };
+  return { getBoard, makeMove, printBoard, isMoveValid };
 }
 
 function GameController(
@@ -56,12 +57,14 @@ function GameController(
   };
 
   const playRound = (row, column) => {
-    board.makeMove(row, column, getActivePlayer().mark);
+    if (board.isMoveValid(row, column)) {
+      board.makeMove(row, column, getActivePlayer().mark);
 
-    // Check for winner
+      // Check for winner
 
-    switchPlayerTurn();
-    printNewRound();
+      switchPlayerTurn();
+      printNewRound();
+    }
   };
 
   printNewRound();
