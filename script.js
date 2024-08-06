@@ -43,6 +43,13 @@ function GameController(
 
   let activePlayer = players[0];
   console.log(activePlayer);
+
+  const switchPlayerTurn = () => {
+    if (activePlayer === players[0]) activePlayer = players[1];
+    else activePlayer = players[0];
+  };
+
+  const getActivePlayer = () => activePlayer;
 }
 
 GameController();
