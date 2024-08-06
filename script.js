@@ -10,19 +10,20 @@ function Gameboard() {
     }
   }
 
-  const getBoard = () => board;
+  // const getBoard = () => board;
 
   const isMoveValid = (row, column) => {
     return board[row][column] === 0;
   };
 
   const makeMove = (row, column, player) => {
-    if (isMoveValid(row, column)) board[row][column] = player;
+    board[row][column] = player;
   };
 
   const printBoard = () => console.table(board);
 
-  return { getBoard, makeMove, printBoard, isMoveValid };
+  // return { getBoard, isMoveValid, makeMove, printBoard };
+  return { rows, columns, board, isMoveValid, makeMove, printBoard };
 }
 
 function GameController(
@@ -56,11 +57,46 @@ function GameController(
     console.log(`${getActivePlayer().name}'s turn.`);
   };
 
+  const didPlayerWin = () => {
+    // Check rows
+    for (let i = 0; i < board.rows; i++) {
+      if (
+        board.board[i][0] !== 0 &&
+        board.board[i][0] === board.board[i][1] &&
+        board.board[i][1] === board.board[i][2]
+      )
+        return true;
+    }
+
+    // Check columns
+    for (let j = 0; j < board.columns; j++) {
+      if (
+        board.board[0][j] !== 0 &&
+        board.board[0][j] === board.board[1][j] &&
+        board.board[1][j] === board.board[2][j]
+      )
+        return true;
+    }
+
+    // Check diagonals
+    if (
+      (board.board[0][0] !== 0 &&
+        board.board[0][0] === board.board[1][1] &&
+        board.board[1][1] === board.board[2][2]) ||
+      (board.board[0][2] !== 0 &&
+        board.board[0][2] === board.board[1][1] &&
+        board.board[1][1] === board.board[0][2])
+    )
+      return true;
+
+    return false;
+  };
+
   const playRound = (row, column) => {
     if (board.isMoveValid(row, column)) {
       board.makeMove(row, column, getActivePlayer().mark);
 
-      // Check for winner
+      console.log(didPlayerWin());
 
       switchPlayerTurn();
       printNewRound();
