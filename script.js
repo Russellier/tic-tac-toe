@@ -3,17 +3,25 @@ function Gameboard() {
   const columns = 3;
   const board = [];
 
-  let cell = 0;
-
   for (let i = 0; i < rows; i++) {
     board[i] = [];
     for (let j = 0; j < columns; j++) {
-      board[i].push(cell);
-      cell++;
+      board[i].push(0);
     }
   }
 
-  console.log(board);
+  const makeMove = (row, column, player) => {
+    //Check if move is valid
+    if (board[row][column] !== 0) return;
+
+    board[row][column] = player;
+  };
+
+  const printBoard = () => console.table(board);
+
+  return { makeMove, printBoard };
 }
 
-Gameboard();
+const game = Gameboard();
+game.makeMove(1, 1, 2);
+game.printBoard();
