@@ -10,6 +10,8 @@ function Gameboard() {
     }
   }
 
+  const getBoard = () => board;
+
   const makeMove = (row, column, player) => {
     //Check if move is valid
     if (board[row][column] !== 0) return;
@@ -19,9 +21,28 @@ function Gameboard() {
 
   const printBoard = () => console.table(board);
 
-  return { makeMove, printBoard };
+  return { getBoard, makeMove, printBoard };
 }
 
-const game = Gameboard();
-game.makeMove(1, 1, 2);
-game.printBoard();
+function GameController(
+  playerOneName = 'Player 1',
+  playerTwoName = 'Player 2'
+) {
+  const board = Gameboard();
+
+  const players = [
+    {
+      name: playerOneName,
+      token: 1,
+    },
+    {
+      name: playerTwoName,
+      token: 2,
+    },
+  ];
+
+  let activePlayer = players[0];
+  console.log(activePlayer);
+}
+
+GameController();
