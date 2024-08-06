@@ -33,16 +33,15 @@ function GameController(
   const players = [
     {
       name: playerOneName,
-      token: 1,
+      mark: 1,
     },
     {
       name: playerTwoName,
-      token: 2,
+      mark: 2,
     },
   ];
 
   let activePlayer = players[0];
-  console.log(activePlayer);
 
   const switchPlayerTurn = () => {
     if (activePlayer === players[0]) activePlayer = players[1];
@@ -50,6 +49,24 @@ function GameController(
   };
 
   const getActivePlayer = () => activePlayer;
+
+  const printNewRound = () => {
+    board.printBoard();
+    console.log(`${getActivePlayer().name}'s turn.`);
+  };
+
+  const playRound = (row, column) => {
+    board.makeMove(row, column, getActivePlayer().mark);
+
+    // Check for winner
+
+    switchPlayerTurn();
+    printNewRound();
+  };
+
+  printNewRound();
+
+  return { playRound };
 }
 
-GameController();
+const game = GameController();
