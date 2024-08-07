@@ -46,7 +46,15 @@ h6 {
   overflow-wrap: break-word;
 }
 
+.board {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 1rem;
+  width: 50vw;
+}
+
 .square-btn {
-  height: 50px;
-  width: 50px;
+  height: 100px;
+  width: 100px;
 }
