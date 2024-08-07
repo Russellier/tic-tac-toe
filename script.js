@@ -53,11 +53,11 @@ function GameController(
   const players = [
     {
       name: playerOneName,
-      mark: 1,
+      mark: 'X',
     },
     {
       name: playerTwoName,
-      mark: 2,
+      mark: 'O',
     },
   ];
 
@@ -149,18 +149,26 @@ function GameController(
   };
 }
 
-function screenController() {
-  const game = GameController();
+function ScreenController() {
+  // const game = GameController();
+  // let game;
   const activePlayerEl = document.querySelector('.active-player');
   const boardEl = document.querySelector('.board');
+  const dialogBox = document.querySelector('.form-container');
+  const startBtn = document.querySelector('.start-btn');
+  const player1 = document.querySelector('.player1');
+  const player2 = document.querySelector('.player2');
 
   const displayBoard = () => {
+    if (!game) return;
+
+    // Clear display
     boardEl.textContent = '';
 
     const board = game.getBoard;
     const activePlayer = game.getActivePlayer();
 
-    activePlayerEl.textContent = `${activePlayer.name}'s turn`;
+    activePlayerEl.textContent = `${activePlayer.mark}: ${activePlayer.name}'s turn`;
 
     board.forEach((row, i) => {
       row.forEach((column, j) => {
@@ -177,8 +185,9 @@ function screenController() {
   const showMark = (playerMark) => {
     let btnImg = '';
 
-    if (playerMark === 1) btnImg = '<img src="icons/xMark.svg" alt="X" />';
-    else if (playerMark === 2) btnImg = '<img src="icons/oMark.svg" alt="O" />';
+    if (playerMark === 'X') btnImg = '<img src="icons/xMark.svg" alt="X" />';
+    else if (playerMark === 'O')
+      btnImg = '<img src="icons/oMark.svg" alt="O" />';
 
     return btnImg;
   };
@@ -195,9 +204,28 @@ function screenController() {
     displayBoard();
   }
 
+  function initialize(e) {
+    const name1 = player1.value;
+    const name2 = player2.value;
+
+    game = GameController(name1, name2);
+
+    displayBoard();
+  }
+
+  startBtn.addEventListener('click', initialize);
+
+  // Prevent user from closing dialog
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+    }
+  });
+
   boardEl.addEventListener('click', clickHandler);
 
-  displayBoard();
+  dialogBox.showModal();
+  // displayBoard();
 }
 
-screenController();
+ScreenController();

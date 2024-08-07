@@ -122,3 +122,52 @@ button:hover {
   height: 3rem;
   background-color: var(--green);
 }
+
+dialog::backdrop {
+  background-color: rgba(255, 255, 255, 0.381);
+}
+
+dialog {
+  border: none;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.form {
+  display: grid;
+  gap: 10px;
+  padding: 1rem;
+  color: var(--white);
+}
+
+.form > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.form label {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.form input {
+  background-color: var(--cream);
+  color: var(--black);
+  border-radius: 5px;
+  padding: 0 5px;
+  height: 2.5rem;
+  width: 15rem;
+  font-size: 1.5rem;
+}
+
+.form > :nth-last-child(2) {
+  padding-bottom: 1rem;
+}
+
+.form > button {
+  justify-self: center;
+  height: 2rem;
+  width: 8rem;
+  border-radius: 5px;
+  font-weight: bold;
+}

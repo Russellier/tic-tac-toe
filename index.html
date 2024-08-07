@@ -10,6 +10,21 @@
     <div class="header">
       <p>Tic-Tac-Toe</p>
     </div>
+    <dialog class="form-container">
+      <form class="form">
+        <div>
+          <label for="player1">Player 1 (X) name:</label>
+          <input autofocus required class="player1" id="player1" type="text" />
+        </div>
+        <div>
+          <label for="player2">Player 2 (O) name:</label>
+          <input required class="player2" id="player2" type="text" />
+        </div>
+        <button class="start-btn" formmethod="dialog" type="submit">
+          Start Game
+        </button>
+      </form>
+    </dialog>
     <div class="game-container">
       <p class="active-player"></p>
       <div class="board-container">
