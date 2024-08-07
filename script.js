@@ -111,6 +111,7 @@ function GameController(
     return false;
   };
 
+  // Check for tie
   const isGameOver = () => {
     for (let i = 0; i < board.rows; i++) {
       for (let j = 0; j < board.columns; j++) {
@@ -141,7 +142,26 @@ function GameController(
 
   printNewRound();
 
-  return { playRound };
+  return {
+    playRound,
+    getActivePlayer,
+    getBoard: board.board,
+  };
 }
 
-const game = GameController();
+function screenController() {
+  const game = GameController();
+  const activePlayerEl = document.querySelector('.active-player');
+  const boardEl = document.querySelector('.board');
+
+  const displayBoard = () => {
+    const board = game.getBoard;
+    const activePlayer = game.getActivePlayer();
+
+    activePlayerEl.textContent = `${activePlayer.name}'s turn`;
+  };
+
+  displayBoard();
+}
+
+screenController();
