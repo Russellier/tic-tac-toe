@@ -45,3 +45,8 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
+
+.square-btn {
+  height: 50px;
+  width: 50px;
+}

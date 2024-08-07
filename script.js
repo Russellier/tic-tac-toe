@@ -159,6 +159,14 @@ function screenController() {
     const activePlayer = game.getActivePlayer();
 
     activePlayerEl.textContent = `${activePlayer.name}'s turn`;
+
+    board.forEach((row, i) => {
+      row.forEach((column, j) => {
+        const squareBtn = document.createElement('button');
+        squareBtn.classList.add('square-btn');
+        boardEl.appendChild(squareBtn);
+      });
+    });
   };
 
   displayBoard();
