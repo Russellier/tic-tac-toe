@@ -3,12 +3,21 @@ function Gameboard() {
   const columns = 3;
   const board = [];
 
-  for (let i = 0; i < rows; i++) {
-    board[i] = [];
-    for (let j = 0; j < columns; j++) {
-      board[i].push(0);
+  const createBoard = () => {
+    for (let i = 0; i < rows; i++) {
+      board[i] = [];
+      for (let j = 0; j < columns; j++) {
+        board[i].push(0);
+      }
     }
-  }
+  };
+
+  // for (let i = 0; i < rows; i++) {
+  //   board[i] = [];
+  //   for (let j = 0; j < columns; j++) {
+  //     board[i].push(0);
+  //   }
+  // }
 
   // const getBoard = () => board;
 
@@ -22,8 +31,17 @@ function Gameboard() {
 
   const printBoard = () => console.table(board);
 
-  // return { getBoard, isMoveValid, makeMove, printBoard };
-  return { rows, columns, board, isMoveValid, makeMove, printBoard };
+  createBoard();
+
+  return {
+    rows,
+    columns,
+    board,
+    createBoard,
+    isMoveValid,
+    makeMove,
+    printBoard,
+  };
 }
 
 function GameController(
@@ -53,6 +71,7 @@ function GameController(
   const getActivePlayer = () => activePlayer;
 
   const printNewRound = () => {
+    // board.createBoard();
     board.printBoard();
     console.log(`${getActivePlayer().name}'s turn.`);
   };
@@ -106,11 +125,10 @@ function GameController(
     if (board.isMoveValid(row, column)) {
       board.makeMove(row, column, getActivePlayer().mark);
 
-      console.log(didPlayerWin());
-      // Create option to restart
-
-      console.log(isGameOver());
-      // Create option to restart
+      if (didPlayerWin() || isGameOver()) {
+        console.log('Game Restarted');
+        board.createBoard();
+      }
 
       switchPlayerTurn();
       printNewRound();
