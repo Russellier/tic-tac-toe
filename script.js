@@ -125,6 +125,10 @@ function GameController(
     if (board.isMoveValid(row, column)) {
       board.makeMove(row, column, getActivePlayer().mark);
 
+      if (didPlayerWin()) console.log(`${getActivePlayer().name} wins`);
+
+      if (isGameOver()) console.log('Tie');
+
       if (didPlayerWin() || isGameOver()) {
         console.log('Game Restarted');
         board.createBoard();
