@@ -155,6 +155,8 @@ function screenController() {
   const boardEl = document.querySelector('.board');
 
   const displayBoard = () => {
+    boardEl.textContent = '';
+
     const board = game.getBoard;
     const activePlayer = game.getActivePlayer();
 
@@ -164,10 +166,27 @@ function screenController() {
       row.forEach((column, j) => {
         const squareBtn = document.createElement('button');
         squareBtn.classList.add('square-btn');
+        squareBtn.textContent = board[i][j];
+        squareBtn.dataset.row = i;
+        squareBtn.dataset.column = j;
         boardEl.appendChild(squareBtn);
       });
     });
   };
+
+  function clickHandler(e) {
+    if (!e.target.classList.contains('square-btn')) return;
+
+    const row = e.target.dataset.row;
+    const column = e.target.dataset.column;
+    console.log(row);
+    console.log(column);
+
+    game.playRound(row, column);
+    displayBoard();
+  }
+
+  boardEl.addEventListener('click', clickHandler);
 
   displayBoard();
 }
