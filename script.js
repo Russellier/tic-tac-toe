@@ -166,12 +166,21 @@ function screenController() {
       row.forEach((column, j) => {
         const squareBtn = document.createElement('button');
         squareBtn.classList.add('square-btn');
-        squareBtn.textContent = board[i][j];
+        squareBtn.innerHTML = showMark(board[i][j]);
         squareBtn.dataset.row = i;
         squareBtn.dataset.column = j;
         boardEl.appendChild(squareBtn);
       });
     });
+  };
+
+  const showMark = (playerMark) => {
+    let btnImg = '';
+
+    if (playerMark === 1) btnImg = '<img src="icons/xMark.svg" alt="X" />';
+    else if (playerMark === 2) btnImg = '<img src="icons/oMark.svg" alt="O" />';
+
+    return btnImg;
   };
 
   function clickHandler(e) {
