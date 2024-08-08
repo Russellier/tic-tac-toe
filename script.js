@@ -12,15 +12,6 @@ function Gameboard() {
     }
   };
 
-  // for (let i = 0; i < rows; i++) {
-  //   board[i] = [];
-  //   for (let j = 0; j < columns; j++) {
-  //     board[i].push(0);
-  //   }
-  // }
-
-  // const getBoard = () => board;
-
   const isMoveValid = (row, column) => {
     return board[row][column] === 0;
   };
@@ -28,8 +19,6 @@ function Gameboard() {
   const makeMove = (row, column, player) => {
     board[row][column] = player;
   };
-
-  // const printBoard = () => console.table(board);
 
   createBoard();
 
@@ -40,7 +29,6 @@ function Gameboard() {
     createBoard,
     isMoveValid,
     makeMove,
-    // printBoard,
   };
 }
 
@@ -72,12 +60,6 @@ function GameController(
 
   const getPlayers = () => players;
   const getActivePlayer = () => activePlayer;
-
-  // const printNewRound = () => {
-  //   // board.createBoard();
-  //   // board.printBoard();
-  //   // console.log(`${getActivePlayer().name}'s turn.`);
-  // };
 
   const didPlayerWin = () => {
     // Check rows
@@ -132,27 +114,21 @@ function GameController(
       board.makeMove(row, column, getActivePlayer().mark);
 
       if (didPlayerWin()) {
-        // console.log(`${getActivePlayer().name} wins`);
         activePlayer.score++;
         winner = getActivePlayer().name;
-        //text = 'active player' wins
       } else if (isTie()) {
-        // console.log('Tie');
         winner = 'Tie';
-        //text = tie
       }
 
       if (didPlayerWin() || isTie()) {
         board.createBoard();
-        // console.log('Game Restarted');
-        //display text
-        //create next round button
-        //create restart button
+        // setTimeout(function () {
+        //   board.createBoard();
+        // }, 2000);
       }
 
       switchPlayerTurn();
       return winner;
-      // printNewRound();
     }
   };
 
@@ -160,11 +136,7 @@ function GameController(
     // set scores to 0
     players[0].score = 0;
     players[1].score = 0;
-    // clear board
-    console.log('Game Restarted');
   };
-
-  // printNewRound();
 
   return {
     playRound,
@@ -177,9 +149,7 @@ function GameController(
 }
 
 function ScreenController() {
-  // const game = GameController();
   let game;
-  // const gameContainer = document.querySelector('.game-container');
   const body = document.querySelector('body');
   const activePlayerEl = document.querySelector('.active-player');
   const boardEl = document.querySelector('.board');
@@ -229,9 +199,6 @@ function ScreenController() {
     score2.textContent = `${players[1].name}: ${players[1].score}`;
 
     scoreContainer.append(scoreHeading, score1, score2);
-
-    // console.log(`${players[0].mark} score: ${players[0].score}`);
-    // console.log(`${players[1].mark} score: ${players[1].score}`);
   };
 
   const displayWinner = (winner) => {
@@ -271,6 +238,9 @@ function ScreenController() {
     body.appendChild(winnerDialog);
 
     winnerDialog.showModal();
+    // setTimeout(function () {
+    //   winnerDialog.showModal();
+    // }, 2000);
   };
 
   const placeMark = (playerMark) => {
@@ -288,10 +258,7 @@ function ScreenController() {
 
     const row = e.target.dataset.row;
     const column = e.target.dataset.column;
-    // let winner = game.getActivePlayer();
     const winner = game.playRound(row, column);
-    // console.log(row);
-    // console.log(column);
 
     if (winner) {
       displayWinner(winner);
@@ -357,7 +324,6 @@ function ScreenController() {
   boardEl.addEventListener('click', clickHandler);
 
   dialogBox.showModal();
-  // displayBoard();
 }
 
 ScreenController();
