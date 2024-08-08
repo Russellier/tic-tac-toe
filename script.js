@@ -126,22 +126,23 @@ function GameController(
   };
 
   const playRound = (row, column) => {
-    let isGameOver = false;
+    let winner = '';
 
     if (board.isMoveValid(row, column)) {
       board.makeMove(row, column, getActivePlayer().mark);
 
       if (didPlayerWin()) {
-        console.log(`${getActivePlayer().name} wins`);
+        // console.log(`${getActivePlayer().name} wins`);
         activePlayer.score++;
+        winner = getActivePlayer().name;
         //text = 'active player' wins
       } else if (isTie()) {
-        console.log('Tie');
+        // console.log('Tie');
+        winner = 'Tie';
         //text = tie
       }
 
       if (didPlayerWin() || isTie()) {
-        isGameOver = true;
         console.log('Game Restarted');
         board.createBoard();
         //display text
@@ -150,9 +151,14 @@ function GameController(
       }
 
       switchPlayerTurn();
+      return winner;
       // printNewRound();
     }
-    return { isGameOver };
+  };
+
+  const restartGame = () => {
+    // set scores to 0
+    // clear board
   };
 
   // printNewRound();
@@ -161,6 +167,8 @@ function GameController(
     playRound,
     getActivePlayer,
     getPlayers,
+    didPlayerWin,
+    isTie,
     getBoard: board.board,
   };
 }
@@ -230,10 +238,10 @@ function ScreenController() {
     const nextRdBtn = document.createElement('button');
     const restartBtn = document.createElement('button');
 
-    if (winner) {
-      winnerMessage.textContent = `${winner} wins!`;
-    } else {
+    if (winner === 'Tie') {
       winnerMessage.textContent = 'Tie';
+    } else {
+      winnerMessage.textContent = `${winner} wins!`;
     }
 
     nextRdBtn.textContent = 'Play again';
@@ -269,13 +277,13 @@ function ScreenController() {
 
     const row = e.target.dataset.row;
     const column = e.target.dataset.column;
-    let winner = game.getActivePlayer();
+    // let winner = game.getActivePlayer();
+    const winner = game.playRound(row, column);
     // console.log(row);
     // console.log(column);
 
-    // game.playRound(row, column);
-    if (game.playRound(row, column).isGameOver) {
-      displayWinner(winner.name);
+    if (winner) {
+      displayWinner(winner);
       displayScore();
     }
 
