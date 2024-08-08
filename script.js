@@ -171,6 +171,7 @@ function GameController(
     getActivePlayer,
     getPlayers,
     restartGame,
+    switchPlayerTurn,
     getBoard: board.board,
   };
 }
@@ -258,8 +259,10 @@ function ScreenController() {
     });
 
     restartBtn.addEventListener('click', () => {
+      if (game.getActivePlayer().mark === 'O') game.switchPlayerTurn();
       game.restartGame();
       displayScore();
+      displayBoard();
       winnerDialog.close();
     });
 
