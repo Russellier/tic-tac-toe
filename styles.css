@@ -225,3 +225,14 @@ dialog {
 .score-container > span {
   font-size: 1rem;
 }
+
+@media only screen and (max-width: 600px) {
+  .board {
+    width: 70vw;
+    height: 70vw;
+  }
+
+  [src$='.svg'] {
+    height: 2.5rem;
+  }
+}
