@@ -171,3 +171,9 @@ dialog {
   border-radius: 5px;
   font-weight: bold;
 }
+
+.form > .error-msg {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #ff7171;
+}

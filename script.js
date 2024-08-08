@@ -70,11 +70,11 @@ function GameController(
 
   const getActivePlayer = () => activePlayer;
 
-  const printNewRound = () => {
-    // board.createBoard();
-    // board.printBoard();
-    console.log(`${getActivePlayer().name}'s turn.`);
-  };
+  // const printNewRound = () => {
+  //   // board.createBoard();
+  //   // board.printBoard();
+  //   // console.log(`${getActivePlayer().name}'s turn.`);
+  // };
 
   const didPlayerWin = () => {
     // Check rows
@@ -136,11 +136,11 @@ function GameController(
       }
 
       switchPlayerTurn();
-      printNewRound();
+      // printNewRound();
     }
   };
 
-  printNewRound();
+  // printNewRound();
 
   return {
     playRound,
@@ -151,10 +151,11 @@ function GameController(
 
 function ScreenController() {
   // const game = GameController();
-  // let game;
+  let game;
   const activePlayerEl = document.querySelector('.active-player');
   const boardEl = document.querySelector('.board');
   const dialogBox = document.querySelector('.form-container');
+  const form = document.querySelector('.form');
   const startBtn = document.querySelector('.start-btn');
   const player1 = document.querySelector('.player1');
   const player2 = document.querySelector('.player2');
@@ -168,7 +169,7 @@ function ScreenController() {
     const board = game.getBoard;
     const activePlayer = game.getActivePlayer();
 
-    activePlayerEl.textContent = `${activePlayer.mark}: ${activePlayer.name}'s turn`;
+    activePlayerEl.textContent = `${activePlayer.name}'s turn: ${activePlayer.mark}`;
 
     board.forEach((row, i) => {
       row.forEach((column, j) => {
@@ -204,9 +205,43 @@ function ScreenController() {
     displayBoard();
   }
 
+  function isInputValid(name1, name2) {
+    const errorMsg = document.createElement('p');
+    errorMsg.classList.add('error-msg');
+
+    if (form.lastElementChild !== startBtn) {
+      form.removeChild(form.lastElementChild);
+    }
+
+    if (!name1) {
+      errorMsg.textContent = 'Please enter Player 1 name';
+      form.appendChild(errorMsg);
+      return false;
+    }
+
+    if (!name2) {
+      errorMsg.textContent = 'Please enter Player 2 name';
+      form.appendChild(errorMsg);
+      return false;
+    }
+
+    if (name1 === name2) {
+      errorMsg.textContent = 'Please enter different names';
+      form.appendChild(errorMsg);
+      return false;
+    }
+
+    return true;
+  }
+
   function initialize(e) {
     const name1 = player1.value;
     const name2 = player2.value;
+
+    if (!isInputValid(name1, name2)) {
+      e.preventDefault();
+      return;
+    }
 
     game = GameController(name1, name2);
 
