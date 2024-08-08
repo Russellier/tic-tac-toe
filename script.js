@@ -152,7 +152,7 @@ function GameController(
       switchPlayerTurn();
       // printNewRound();
     }
-    return isGameOver;
+    return { isGameOver };
   };
 
   // printNewRound();
@@ -168,7 +168,8 @@ function GameController(
 function ScreenController() {
   // const game = GameController();
   let game;
-  const gameContainer = document.querySelector('.game-container');
+  // const gameContainer = document.querySelector('.game-container');
+  const body = document.querySelector('body');
   const activePlayerEl = document.querySelector('.active-player');
   const boardEl = document.querySelector('.board');
   const dialogBox = document.querySelector('.form-container');
@@ -176,6 +177,7 @@ function ScreenController() {
   const startBtn = document.querySelector('.start-btn');
   const player1 = document.querySelector('.player1');
   const player2 = document.querySelector('.player2');
+  const scoreContainer = document.querySelector('.score-container');
 
   const displayBoard = () => {
     if (!game) return;
@@ -192,7 +194,7 @@ function ScreenController() {
       row.forEach((column, j) => {
         const squareBtn = document.createElement('button');
         squareBtn.classList.add('square-btn');
-        squareBtn.innerHTML = showMark(board[i][j]);
+        squareBtn.innerHTML = placeMark(board[i][j]);
         squareBtn.dataset.row = i;
         squareBtn.dataset.column = j;
         boardEl.appendChild(squareBtn);
@@ -204,7 +206,6 @@ function ScreenController() {
     if (!game) return;
 
     const players = game.getPlayers();
-    const scoreContainer = document.querySelector('.score-container');
     const scoreHeading = document.createElement('p');
     const score1 = document.createElement('span');
     const score2 = document.createElement('span');
@@ -218,11 +219,42 @@ function ScreenController() {
 
     scoreContainer.append(scoreHeading, score1, score2);
 
-    console.log(`${players[0].mark} score: ${players[0].score}`);
-    console.log(`${players[1].mark} score: ${players[1].score}`);
+    // console.log(`${players[0].mark} score: ${players[0].score}`);
+    // console.log(`${players[1].mark} score: ${players[1].score}`);
   };
 
-  const showMark = (playerMark) => {
+  const displayWinner = (winner) => {
+    const winnerDialog = document.createElement('dialog');
+    const winnerContainer = document.createElement('div');
+    const winnerMessage = document.createElement('p');
+    const nextRdBtn = document.createElement('button');
+    const restartBtn = document.createElement('button');
+
+    if (winner) {
+      winnerMessage.textContent = `${winner} wins!`;
+    } else {
+      winnerMessage.textContent = 'Tie';
+    }
+
+    nextRdBtn.textContent = 'Play again';
+    restartBtn.textContent = 'Restart';
+
+    winnerContainer.classList.add('winner-container');
+    nextRdBtn.classList.add('next-round-btn');
+    restartBtn.classList.add('restart-btn');
+
+    nextRdBtn.addEventListener('click', () => {
+      winnerDialog.close();
+    });
+
+    winnerContainer.append(winnerMessage, nextRdBtn, restartBtn);
+    winnerDialog.appendChild(winnerContainer);
+    body.appendChild(winnerDialog);
+
+    winnerDialog.showModal();
+  };
+
+  const placeMark = (playerMark) => {
     let btnImg = '';
 
     if (playerMark === 'X') btnImg = '<img src="icons/xMark.svg" alt="X" />';
@@ -237,11 +269,16 @@ function ScreenController() {
 
     const row = e.target.dataset.row;
     const column = e.target.dataset.column;
+    let winner = game.getActivePlayer();
     // console.log(row);
     // console.log(column);
 
-    game.playRound(row, column);
-    displayScore();
+    // game.playRound(row, column);
+    if (game.playRound(row, column).isGameOver) {
+      displayWinner(winner.name);
+      displayScore();
+    }
+
     displayBoard();
   }
 
