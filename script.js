@@ -143,8 +143,8 @@ function GameController(
       }
 
       if (didPlayerWin() || isTie()) {
-        console.log('Game Restarted');
         board.createBoard();
+        // console.log('Game Restarted');
         //display text
         //create next round button
         //create restart button
@@ -158,7 +158,10 @@ function GameController(
 
   const restartGame = () => {
     // set scores to 0
+    players[0].score = 0;
+    players[1].score = 0;
     // clear board
+    console.log('Game Restarted');
   };
 
   // printNewRound();
@@ -167,8 +170,7 @@ function GameController(
     playRound,
     getActivePlayer,
     getPlayers,
-    didPlayerWin,
-    isTie,
+    restartGame,
     getBoard: board.board,
   };
 }
@@ -252,6 +254,12 @@ function ScreenController() {
     restartBtn.classList.add('restart-btn');
 
     nextRdBtn.addEventListener('click', () => {
+      winnerDialog.close();
+    });
+
+    restartBtn.addEventListener('click', () => {
+      game.restartGame();
+      displayScore();
       winnerDialog.close();
     });
 
