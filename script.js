@@ -29,7 +29,7 @@ function Gameboard() {
     board[row][column] = player;
   };
 
-  const printBoard = () => console.table(board);
+  // const printBoard = () => console.table(board);
 
   createBoard();
 
@@ -40,7 +40,7 @@ function Gameboard() {
     createBoard,
     isMoveValid,
     makeMove,
-    printBoard,
+    // printBoard,
   };
 }
 
@@ -72,7 +72,7 @@ function GameController(
 
   const printNewRound = () => {
     // board.createBoard();
-    board.printBoard();
+    // board.printBoard();
     console.log(`${getActivePlayer().name}'s turn.`);
   };
 
@@ -104,7 +104,7 @@ function GameController(
         board.board[1][1] === board.board[2][2]) ||
       (board.board[0][2] !== 0 &&
         board.board[0][2] === board.board[1][1] &&
-        board.board[1][1] === board.board[0][2])
+        board.board[1][1] === board.board[2][0])
     )
       return true;
 
@@ -197,8 +197,8 @@ function ScreenController() {
 
     const row = e.target.dataset.row;
     const column = e.target.dataset.column;
-    console.log(row);
-    console.log(column);
+    // console.log(row);
+    // console.log(column);
 
     game.playRound(row, column);
     displayBoard();
