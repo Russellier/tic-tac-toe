@@ -54,10 +54,12 @@ function GameController(
     {
       name: playerOneName,
       mark: 'X',
+      score: 0,
     },
     {
       name: playerTwoName,
       mark: 'O',
+      score: 0,
     },
   ];
 
@@ -68,6 +70,7 @@ function GameController(
     else activePlayer = players[0];
   };
 
+  const getPlayers = () => players;
   const getActivePlayer = () => activePlayer;
 
   // const printNewRound = () => {
@@ -112,7 +115,7 @@ function GameController(
   };
 
   // Check for tie
-  const isGameOver = () => {
+  const isTie = () => {
     for (let i = 0; i < board.rows; i++) {
       for (let j = 0; j < board.columns; j++) {
         if (board.board[i][j] === 0) return false;
@@ -123,21 +126,33 @@ function GameController(
   };
 
   const playRound = (row, column) => {
+    let isGameOver = false;
+
     if (board.isMoveValid(row, column)) {
       board.makeMove(row, column, getActivePlayer().mark);
 
-      if (didPlayerWin()) console.log(`${getActivePlayer().name} wins`);
+      if (didPlayerWin()) {
+        console.log(`${getActivePlayer().name} wins`);
+        activePlayer.score++;
+        //text = 'active player' wins
+      } else if (isTie()) {
+        console.log('Tie');
+        //text = tie
+      }
 
-      if (isGameOver()) console.log('Tie');
-
-      if (didPlayerWin() || isGameOver()) {
+      if (didPlayerWin() || isTie()) {
+        isGameOver = true;
         console.log('Game Restarted');
         board.createBoard();
+        //display text
+        //create next round button
+        //create restart button
       }
 
       switchPlayerTurn();
       // printNewRound();
     }
+    return isGameOver;
   };
 
   // printNewRound();
@@ -145,6 +160,7 @@ function GameController(
   return {
     playRound,
     getActivePlayer,
+    getPlayers,
     getBoard: board.board,
   };
 }
@@ -152,6 +168,7 @@ function GameController(
 function ScreenController() {
   // const game = GameController();
   let game;
+  const gameContainer = document.querySelector('.game-container');
   const activePlayerEl = document.querySelector('.active-player');
   const boardEl = document.querySelector('.board');
   const dialogBox = document.querySelector('.form-container');
@@ -183,6 +200,28 @@ function ScreenController() {
     });
   };
 
+  const displayScore = () => {
+    if (!game) return;
+
+    const players = game.getPlayers();
+    const scoreContainer = document.querySelector('.score-container');
+    const scoreHeading = document.createElement('p');
+    const score1 = document.createElement('span');
+    const score2 = document.createElement('span');
+
+    // prevent duplication score
+    scoreContainer.textContent = '';
+
+    scoreHeading.textContent = 'Score';
+    score1.textContent = `${players[0].name}: ${players[0].score}`;
+    score2.textContent = `${players[1].name}: ${players[1].score}`;
+
+    scoreContainer.append(scoreHeading, score1, score2);
+
+    console.log(`${players[0].mark} score: ${players[0].score}`);
+    console.log(`${players[1].mark} score: ${players[1].score}`);
+  };
+
   const showMark = (playerMark) => {
     let btnImg = '';
 
@@ -202,6 +241,7 @@ function ScreenController() {
     // console.log(column);
 
     game.playRound(row, column);
+    displayScore();
     displayBoard();
   }
 
@@ -246,6 +286,7 @@ function ScreenController() {
     game = GameController(name1, name2);
 
     displayBoard();
+    displayScore();
   }
 
   startBtn.addEventListener('click', initialize);

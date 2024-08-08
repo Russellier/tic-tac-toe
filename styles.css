@@ -72,10 +72,10 @@ button:hover {
 .header {
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
   position: relative;
-  height: 5rem;
-  font-size: 3rem;
+  height: 3rem;
+  font-size: 1.5rem;
   font-weight: bold;
   -webkit-box-shadow: 0 2px 10px 5px rgba(255, 255, 255, 0.39);
   box-shadow: 0 2px 10px 5px rgba(255, 255, 255, 0.39);
@@ -85,16 +85,16 @@ button:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 3rem;
-  gap: 2rem;
+  padding-top: 2.5rem;
+  gap: 1.5rem;
 }
 
 .active-player {
-  font-size: 1.8rem;
+  font-size: 1.2rem;
 }
 
 .board-container {
-  padding: 10px;
+  padding: 15px;
   border-radius: 15px;
   -webkit-box-shadow: 0 2px 10px 5px rgba(255, 255, 255, 0.39);
   box-shadow: 3px 3px 10px 3px rgba(255, 255, 255, 0.39);
@@ -104,9 +104,9 @@ button:hover {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-  gap: 0.5rem;
-  width: 50vh;
-  height: 50vh;
+  gap: 10px;
+  width: 48vh;
+  height: 48vh;
 }
 
 .square-btn {
@@ -176,4 +176,26 @@ dialog {
   text-align: center;
   font-size: 0.9rem;
   color: #ff7171;
+}
+
+.score-container {
+  font-weight: bold;
+  padding: 0.8rem 2rem;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 2px 10px 5px rgba(255, 255, 255, 0.39);
+  box-shadow: 3px 3px 10px 3px rgba(255, 255, 255, 0.39);
+}
+
+.score-container > p {
+  text-align: center;
+  padding-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.score-container > span:first-of-type {
+  padding-right: 2rem;
+}
+
+.score-container > span {
+  font-size: 1rem;
 }
