@@ -232,6 +232,10 @@ dialog {
     height: 70vw;
   }
 
+  dialog {
+    width: 70vw;
+  }
+
   [src$='.svg'] {
     height: 2.5rem;
   }
