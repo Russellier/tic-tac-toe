@@ -219,12 +219,14 @@ function ScreenController() {
     restartBtn.classList.add('restart-btn');
 
     nextRdBtn.addEventListener('click', () => {
+      boardEl.addEventListener('click', clickHandler);
       displayBoard();
       winnerDialog.close();
     });
 
     restartBtn.addEventListener('click', () => {
       if (game.getActivePlayer().mark === 'O') game.switchPlayerTurn();
+      boardEl.addEventListener('click', clickHandler);
       game.restartGame();
       displayScore();
       displayBoard();
@@ -257,7 +259,8 @@ function ScreenController() {
 
     if (winner) {
       displayScore();
-      setTimeout(() => displayWinner(winner), 800);
+      boardEl.removeEventListener('click', clickHandler);
+      setTimeout(() => displayWinner(winner), 2800);
     }
 
     displayBoard();
