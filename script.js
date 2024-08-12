@@ -121,10 +121,7 @@ function GameController(
       }
 
       if (didPlayerWin() || isTie()) {
-        board.createBoard();
-        // setTimeout(function () {
-        //   board.createBoard();
-        // }, 2000);
+        setTimeout(() => board.createBoard(), 10);
       }
 
       switchPlayerTurn();
@@ -222,6 +219,7 @@ function ScreenController() {
     restartBtn.classList.add('restart-btn');
 
     nextRdBtn.addEventListener('click', () => {
+      displayBoard();
       winnerDialog.close();
     });
 
@@ -238,9 +236,6 @@ function ScreenController() {
     body.appendChild(winnerDialog);
 
     winnerDialog.showModal();
-    // setTimeout(function () {
-    //   winnerDialog.showModal();
-    // }, 2000);
   };
 
   const placeMark = (playerMark) => {
@@ -261,8 +256,8 @@ function ScreenController() {
     const winner = game.playRound(row, column);
 
     if (winner) {
-      displayWinner(winner);
       displayScore();
+      setTimeout(() => displayWinner(winner), 800);
     }
 
     displayBoard();
